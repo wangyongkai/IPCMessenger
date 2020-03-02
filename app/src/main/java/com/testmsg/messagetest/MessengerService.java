@@ -53,6 +53,6 @@ public class MessengerService extends Service {
     public IBinder onBind(Intent intent) {
         Toast.makeText(getApplicationContext(), "binding", Toast.LENGTH_SHORT).show();
         aMessenger = intent.getParcelableExtra("messenger");
-        return mMessenger.getBinder();
+        return mMessenger.getBinder();//
     }
 }

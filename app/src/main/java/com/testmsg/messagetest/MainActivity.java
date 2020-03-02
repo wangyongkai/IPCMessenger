@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -18,6 +19,30 @@ import android.widget.Toast;
 import static com.testmsg.messagetest.MessengerService.MSG_SAY_HELLO;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    //如何理解aidl 牢记三个类  Stub类  Proxy类  AIDL接口 三个作用
+
+
+    //Messenger类只是一个封装类
+    //1.IMessenger相当于定义的AIDL接口
+
+
+    //Stub类
+    //Handler中getIMessenger()返回一个MessengerImpl
+//    private final class MessengerImpl extends IMessenger.Stub { //持有外部类 Handler
+//        public void send(Message msg) {//这个方法就是到服务端后 调用的方法
+//            msg.sendingUid = Binder.getCallingUid();
+//            Handler.this.sendMessage(msg);
+//        }
+//    }
+
+
+    //构建代理类
+//    public Messenger(IBinder target) {
+//        mTarget = IMessenger.Stub.asInterface(target);
+//    }
+
 
     /**
      * 用于Handler里的消息类型
@@ -58,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // Activity已经绑定了Service
             // 通过参数service来创建Messenger对象，这个对象可以向Service发送Message，与Service进行通信
-            mService = new Messenger(service);
+            mService = new Messenger(service);//拿到的是IMessenger接口中的代理对象
             mBound = true;
         }
 
